@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>All Products</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <p>
+            Welcome <b>[[${email}]]</b>
+        </p>
+        <div style="display: inline-block">
+            <form th:action="@{/myproducts}" method="get">
+                <button type="submit"class=" btn btn-light">My products list</button>
+            </form>
+        </div>
+        <div style="display: inline-block">
+            <form th:action="@{/products}" method="get">
+                <button type="submit"class=" btn btn-light">Products list</button>
+            </form>
+        </div>
+        <div style="display: inline-block">
+            <form th:action="@{/users}" method="get">
+                <button type="submit"class=" btn btn-light">Users list</button>
+            </form>
+        </div>
+        <div style="display: inline-block">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit"class=" btn btn-light">Sign Out</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div>
+            <h2>Create Product</h2>
+        </div>
+    </div>
+    <div align="center">
+            <form th:action="@{/insertProduct/{id}(id = ${product})}" method="post">
+<!--                <div>-->
+<!--                    <label for="title">Title</label>-->
+<!--                    <input id="title" type="text"-->
+<!--                           th:field="*{title}">-->
+<!--                    <p th:if="${#fields.hasErrors('title')}"-->
+<!--                       th:text="${#strings.listJoin(#fields.errors('title'), ', ')}"></p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="description">Description</label>-->
+<!--                    <input id="description" type="text"-->
+<!--                           th:field="*{description}">-->
+<!--                    <p th:if="${#fields.hasErrors('description')}"-->
+<!--                       th:text="${#strings.listJoin(#fields.errors('description'), ', ')}"></p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="price">Price</label>-->
+<!--                    <input id="price" type="text"-->
+<!--                           th:field="*{price}">-->
+<!--                    <p th:if="${#fields.hasErrors('price')}"-->
+<!--                       th:text="${#strings.listJoin(#fields.errors('price'), ', ')}"></p>-->
+<!--                </div>-->
+                <button type="submit">Create product</button>
+            </form>
+    </div>
+</div>
+</body>
+</html>
