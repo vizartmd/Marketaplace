@@ -9,10 +9,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -20,8 +22,6 @@ import java.util.stream.Stream;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
-//    private static final Logger logger = (Logger) LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private ProductRepository productRepository;
     private UserRepository userRepository;
@@ -37,12 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product editProduct(Product product) {
-        Product productFromDb = productRepository.findById(product.getId()).orElse(null);
-        if (productFromDb != null) {
-            productFromDb = product;
-            return productRepository.saveAndFlush(productFromDb);
-        }
-        return null;
+        return productRepository.saveAndFlush(product);
     }
 
     @Override
@@ -61,6 +56,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<Product> findPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1,5);
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
     public List<Product> myProducts(String email) {
         User user = userRepository.findByEmail(email);
         return user.getProductList();
@@ -76,9 +77,4 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    @Override
-    public Page<Product> findProductsWithPagination(int offset, int pageSize) {
-        Page<Product> products = productRepository.findAll(PageRequest.of(offset, pageSize));
-        return products;
-    }
 }

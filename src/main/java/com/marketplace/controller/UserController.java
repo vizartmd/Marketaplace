@@ -31,36 +31,35 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PostMapping("/like-product/{productId}")
-    public ModelAndView likeProductByUserId(@PathVariable String productId, HttpServletRequest request) {
-        System.out.println("Liked productIdToUserId = " + productId);
+    @PostMapping("/like-product/{productId}/currentPage/{currentPage}")
+    public ModelAndView likeProductByUserId(@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
+        System.out.println("currentPage = " + currentPage);
         Product product = productService.vewProductById(Long.parseLong(productId));
         Principal principal = request.getUserPrincipal();
-        System.out.println("principal.getName() = " + principal.getName());
         User user = userService.vewUserByEmail(principal.getName());
         List myProducts = userService.myProducts(user.getId());
         List usersWhoLiked = product.getUsersWhoLiked();
         List usersWhoDisliked = product.getUsersWhoDisliked();
-        if (myProducts.contains(product) || usersWhoDisliked.contains(user)) return new ModelAndView("redirect:/products");
+        if (myProducts.contains(product) || usersWhoDisliked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
         if (usersWhoLiked == null)  {
             usersWhoLiked = (List) new HashSet<User>();
             usersWhoLiked.add(user);
             System.out.println("User = " +  user.toString());
             productService.editProduct(product);
-            return new ModelAndView("redirect:/products");
+            return new ModelAndView("redirect:/products/page/" + currentPage);
         }
-        if (usersWhoLiked.contains(user)) return new ModelAndView("redirect:/products");
+        if (usersWhoLiked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
         usersWhoLiked.add(user);
         product.setLiked(true);
         product.setCheckedLike(true);
         System.out.println("product.isLiked() = " +  product.isLiked());
         System.out.println("product.isCheckedLike() = " +  product.isCheckedLike());
         productService.editProduct(product);
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
-    @PostMapping("/unlike-product/{id}")
-    public ModelAndView UnLikeProductByUserId(@PathVariable String id, HttpServletRequest request) {
+    @PostMapping("/unlike-product/{id}/currentPage/{currentPage}")
+    public ModelAndView UnLikeProductByUserId(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         System.out.println("Id for unlike = " + id);
         Product product = productService.vewProductById(Long.parseLong(id));
         Principal principal = request.getUserPrincipal();
@@ -69,7 +68,7 @@ public class UserController {
         List myProducts = userService.myProducts(user.getId());
         List usersWhoLiked = product.getUsersWhoLiked();
         List usersWhoDisliked = product.getUsersWhoDisliked();
-        if (myProducts.contains(product) || usersWhoLiked.contains(user)) return new ModelAndView("redirect:/products");
+        if (myProducts.contains(product) || usersWhoLiked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
         if (usersWhoDisliked == null)  {
             usersWhoDisliked = (List) new HashSet<User>();
             product.setLiked(false);
@@ -81,9 +80,9 @@ public class UserController {
             System.out.println("product.isCheckedLike() = " +  product.isCheckedLike());
             System.out.println("product.getUsersWhoLiked().contains(user) = " +  product.getUsersWhoLiked().contains(user));
             productService.editProduct(product);
-            return new ModelAndView("redirect:/products");
+            return new ModelAndView("redirect:/products/page/" + currentPage);
         }
-        if (usersWhoDisliked.contains(user)) return new ModelAndView("redirect:/products");
+        if (usersWhoDisliked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
         product.setLiked(false);
         product.setCheckedLike(true);
         usersWhoDisliked.add(user);
@@ -92,11 +91,11 @@ public class UserController {
         System.out.println("product.getUsersWhoLiked().contains(user) = " +  product.getUsersWhoLiked().contains(user));
         System.out.println("Product = " +  product.toString());
         productService.editProduct(product);
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
-    @PostMapping("/reset-likes/{id}")
-    public ModelAndView resetLikes(@PathVariable String id, HttpServletRequest request) {
+    @PostMapping("/reset-likes/{id}/currentPage/{currentPage}")
+    public ModelAndView resetLikes(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         System.out.println("Unliked productIdToUserId = " + id);
         Product product = productService.vewProductById(Long.parseLong(id));
         Principal principal = request.getUserPrincipal();
@@ -114,7 +113,7 @@ public class UserController {
         }
         System.out.println("Product = " +  product.toString());
         productService.editProduct(product);
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
 }

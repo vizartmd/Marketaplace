@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container text-center">
-    <div>
+    <div style="margin-bottom: 20px">
         <p>
             Welcome <b>[[${email}]]</b>
         </p>
@@ -67,31 +67,32 @@
                 <td th:text="${product.price}">Price</td>
                 <td th:if="${#lists.contains(listMyProducts, product)}">
                     <div style="display: inline-block">
-                        <form th:action="@{/remove-from-my-products/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/remove-from-my-products/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit"class=" btn btn-light">Remove from my products</button>
                         </form>
                     </div>
                 </td>
                 <td th:unless="${#lists.contains(listMyProducts, product)}">
                     <div style="display: inline-block">
-                        <form th:action="@{/add-product-to-user/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/add-product-to-user/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit"class=" btn btn-light">Add to my products</button>
                         </form>
                     </div>
                 </td>
+
                 <td>
                     <div style="display: inline-block">
-                        <form th:action="@{/like-product/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/like-product/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit" th:class="${product.isLiked() && product.isCheckedLike() && product.getUsersWhoLiked().contains(user) ? 'btn enabled' : 'btn disabled'}"><i class="fa fa-arrow-circle-o-left"></i>&#128077;</button>
                         </form>
                     </div>
                     <div style="display: inline-block">
-                        <form th:action="@{/unlike-product/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/unlike-product/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit" th:class="${!product.isLiked() && product.isCheckedLike() && product.getUsersWhoDisliked().contains(user) ? 'btn enabled' : 'btn disabled'}"><i class="fa fa-arrow-circle-o-left"></i>&#128078;</button>
                         </form>
                     </div>
                     <div style="display: inline-block">
-                        <form th:action="@{/reset-likes/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/reset-likes/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit" class="btn btn-light">Reset</button>
                         </form>
                     </div>
@@ -106,6 +107,14 @@
             </tr>
             </tbody>
         </table>
+        <footer style="font-size: large" class="panel-footer">
+            Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+            &nbsp; &nbsp; - &nbsp;
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{'/products/page/' + ${i}}">[[${i}]]</a>
+                &nbsp; &nbsp;
+            </span>
+        </footer>
     </div>
 </div>
 </body>

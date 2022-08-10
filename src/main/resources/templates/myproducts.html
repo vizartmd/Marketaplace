@@ -9,23 +9,23 @@
 </head>
 <body>
 <div class="container text-center">
-    <div>
+    <div style="margin-bottom: 20px">
         <p>
             Welcome <b>[[${email}]]</b>
         </p>
         <div style="display: inline-block">
             <form th:action="@{/myproducts}" method="get">
-                <button type="submit"class=" btn btn-light">My products list</button>
+                <button type="submit" class=" btn btn-light">My products list</button>
             </form>
         </div>
         <div style="display: inline-block">
             <form th:action="@{/products}" method="get">
-                <button type="submit"class=" btn btn-light">Products list</button>
+                <button type="submit" class=" btn btn-light">Products list</button>
             </form>
         </div>
         <div style="display: inline-block">
             <form th:action="@{/users}" method="get">
-                <button type="submit"class=" btn btn-light">Users list</button>
+                <button type="submit" class=" btn btn-light">Users list</button>
             </form>
         </div>
         <div style="display: inline-block">
@@ -55,6 +55,9 @@
                 <th>Title</th>
                 <th>Descriptions</th>
                 <th>Price</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Remove from my products</th>
             </tr>
             </thead>
             <tbody>
@@ -63,6 +66,27 @@
                 <td th:text="${product.title}">Title</td>
                 <td th:text="${product.description}">Description</td>
                 <td th:text="${product.price}">Price</td>
+                <td>
+                    <div style="display: flex; justify-content: right">
+                        <form th:action="@{/view-product/{id}(id = ${product.id})}" method="get">
+                            <button type="submit"class=" btn btn-info">View</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex; justify-content: right">
+                        <form th:action="@{/edit-product/{id}(id = ${product.id})}" method="get">
+                            <button type="submit"class=" btn btn-warning">Edit</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div style="display: inline-block">
+                        <form th:action="@{/remove-from-my-products-list/{id}(id = ${product.id})}" method="post">
+                            <button type="submit"class=" btn btn-danger">Remove from my products</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
