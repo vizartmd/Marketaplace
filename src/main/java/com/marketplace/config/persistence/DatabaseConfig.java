@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:application.properties")
 public class DatabaseConfig {
 
     @Resource
@@ -29,7 +29,7 @@ public class DatabaseConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+        em.setPackagesToScan(env.getRequiredProperty("spring.entity.package"));
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
 
@@ -46,7 +46,7 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource ds = new SimpleDriverDataSource();
-        ds.setUrl(env.getRequiredProperty("db.url"));
+        ds.setUrl(env.getRequiredProperty("spring.datasource.url"));
         Class<Driver> driverClass;
         try {
             driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
@@ -54,20 +54,20 @@ public class DatabaseConfig {
         } catch (ClassNotFoundException | ClassCastException e) {
             e.printStackTrace();
         }
-        ds.setUsername(env.getRequiredProperty("db.username"));
-        ds.setPassword(env.getRequiredProperty("db.password"));
+        ds.setUsername(env.getRequiredProperty("spring.datasource.username"));
+        ds.setPassword(env.getRequiredProperty("spring.datasource.password"));
         return ds;
     }
 
     public Properties getHibernateProperties() {
         try {
             Properties properties = new Properties();
-            InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("application.properties");
             properties.load(is);
 
             return properties;
         } catch (IOException e) {
-            throw new IllegalArgumentException("Can't find 'db.properties' in classpath");
+            throw new IllegalArgumentException("Can't find 'application.properties' in classpath");
         }
     }
 }

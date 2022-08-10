@@ -16,6 +16,6 @@ public interface ProductService {
     List<Product> myProducts(String email);
     List<Product> likeProducts(Long userId);
     List<Product> unLikeProducts(Long userId);
-    Page<Product> findProductsWithPagination(int offset, int pageSize);
+    Page<Product> findPage(int pageNumber);
 
 }
