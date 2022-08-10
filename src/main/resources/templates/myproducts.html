@@ -35,7 +35,16 @@
         </div>
     </div>
     <div>
-        <h1>My Products</h1>
+        <div style="display: flex; justify-content: space-between; padding-left: 20px">
+            <div style="display: flex; justify-content: center">
+                <h2>My Products</h2>
+            </div>
+            <div style="display: flex; justify-content: right">
+                <form th:action="@{/add_product}" method="get">
+                    <button type="submit"class=" btn btn-light">Create product</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div>

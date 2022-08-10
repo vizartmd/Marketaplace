@@ -136,19 +136,24 @@ public class AppController {
         return new ModelAndView("redirect:/products");
     }
 
-    @PostMapping("/addProduct")
+    @GetMapping("/add_product")
     public ModelAndView createProduct (HttpServletRequest request,  Model model) {
         Principal principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
         return new ModelAndView("create_product");
     }
 
-    @PostMapping("/insertProduct/{product}")
-    public ModelAndView insertProduct (@PathVariable Product product, HttpServletRequest request,  Model model) {
+    @PostMapping("/add_product")
+    public ModelAndView insertProduct (Product product, HttpServletRequest request,  Model model) {
         Principal principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
-        productService.createProduct(product);
-        return new ModelAndView("redirect:/products");
+        List<Product> products = productService.allProducts();
+        if (!products.contains(product)) {
+            productService.createProduct(product);
+            System.out.println("Product created = " + product.toString());
+            return new ModelAndView("redirect:/products");
+        }
+        return new ModelAndView("create_product");
     }
 
     @PostMapping("/logout")
