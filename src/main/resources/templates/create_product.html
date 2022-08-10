@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>All Products</title>
+    <title>Create product</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -30,7 +31,7 @@
         </div>
         <div style="display: inline-block">
             <form th:action="@{/logout}" method="post">
-                <button type="submit"class=" btn btn-light">Sign Out</button>
+                <button type="submit" class="btn btn-light">Sign Out</button>
             </form>
         </div>
     </div>
@@ -39,32 +40,38 @@
             <h2>Create Product</h2>
         </div>
     </div>
-    <div align="center">
-            <form th:action="@{/insertProduct/{id}(id = ${product})}" method="post">
-<!--                <div>-->
-<!--                    <label for="title">Title</label>-->
-<!--                    <input id="title" type="text"-->
-<!--                           th:field="*{title}">-->
-<!--                    <p th:if="${#fields.hasErrors('title')}"-->
-<!--                       th:text="${#strings.listJoin(#fields.errors('title'), ', ')}"></p>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <label for="description">Description</label>-->
-<!--                    <input id="description" type="text"-->
-<!--                           th:field="*{description}">-->
-<!--                    <p th:if="${#fields.hasErrors('description')}"-->
-<!--                       th:text="${#strings.listJoin(#fields.errors('description'), ', ')}"></p>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <label for="price">Price</label>-->
-<!--                    <input id="price" type="text"-->
-<!--                           th:field="*{price}">-->
-<!--                    <p th:if="${#fields.hasErrors('price')}"-->
-<!--                       th:text="${#strings.listJoin(#fields.errors('price'), ', ')}"></p>-->
-<!--                </div>-->
-                <button type="submit">Create product</button>
-            </form>
-    </div>
+
+    <form  action="#" th:action="@{/add_product}"  th:object="${product}" method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Title: </label>
+                <div class="col-8">
+                    <input type="text" id="title" name="title"  class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Description: </label>
+                <div class="col-8">
+                    <input type="text" id="description" name="description" class="form-control"
+                           required minlength="6" maxlength="500"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Price: </label>
+                <div class="col-8">
+                    <input type="number" id="price" name="price"  class="form-control"
+                           required minlength="2" maxlength="20" />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Save product</button>
+            </div>
+        </div>
+    </form>
+
 </div>
 </body>
 </html>
