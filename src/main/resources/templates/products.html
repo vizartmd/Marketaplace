@@ -99,7 +99,7 @@
                 </td>
                 <td>
                     <div>
-                        <form th:action="@{/delete-product/{id}(id = ${product.id})}" method="post">
+                        <form th:action="@{/delete-product/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </div>
@@ -108,12 +108,19 @@
             </tbody>
         </table>
         <footer style="font-size: large" class="panel-footer">
-            Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
-            &nbsp; &nbsp; - &nbsp;
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                <a th:href="@{'/products/page/' + ${i}}">[[${i}]]</a>
-                &nbsp; &nbsp;
-            </span>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" style="text-align: left">Page [[${currentPage}]] of [[${totalPages}]]</label>
+                <div class="col-8">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <div style="display: inline-block; margin: 3px; padding: 2px 5px; border: 1px solid #E2E6EA; color: white; border-radius: 5px 5px 5px 5px"
+                             th:style="${currentPage == i ? 'display: inline-block; margin: 3px; padding: 2px 5px; border: 1px solid lightgray; border-radius: 5px 5px 5px 5px; background-color: #E2E6EA; color: white;'
+                             : 'display: inline-block; margin: 3px; padding: 2px 5px; border: 2px solid #E2E6EA; border-radius: 5px 5px 5px 5px'}">
+                            <h5 style="margin: 0; padding-bottom: 0; color: grey"><a style="color: #000000;" th:href="@{'/products/page/' + ${i}}">[[${i}]]</a></h5>
+                        </div>
+                    </span>
+                </div>
+                <label class="col-2 col-form-label" style="text-align: right">Total Items - [[${totalItems}]]</label>
+            </div>
         </footer>
     </div>
 </div>

@@ -49,7 +49,7 @@ public class DatabaseConfig {
         ds.setUrl(env.getRequiredProperty("spring.datasource.url"));
         Class<Driver> driverClass;
         try {
-            driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
+            driverClass = (Class<Driver>) Class.forName(env.getRequiredProperty("spring.datasource.driverClassName"));
             ds.setDriverClass(driverClass);
         } catch (ClassNotFoundException | ClassCastException e) {
             e.printStackTrace();

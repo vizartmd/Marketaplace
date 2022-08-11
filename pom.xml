@@ -13,9 +13,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Marketplace Rest API</name>
 	<description>Rest API for a marketplace</description>
+
 	<properties>
 		<java.version>11</java.version>
+		<flyway.user>root</flyway.user>
+		<flyway.password>admin</flyway.password>
+		<flyway.schemas>marketplace</flyway.schemas>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,10 +53,11 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<version>42.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -138,6 +144,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>8.0.0</version>
+				<configuration>
+					<user>root</user>
+					<password>admin</password>
+					<schemas>
+						<schema>marketplace</schema>
+					</schemas>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

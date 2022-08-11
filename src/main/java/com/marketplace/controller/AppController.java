@@ -143,6 +143,21 @@ public class AppController {
         return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
+    @RequestMapping(value = "/remove-from-my-products-list/{productId}", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView removeProductFromMyProductsList (@PathVariable String productId, HttpServletRequest request) {
+        System.out.println("productIdToUserId = " + productId);
+        Product product = productService.vewProductById(Long.parseLong(productId));
+        Principal principal = request.getUserPrincipal();
+        System.out.println("principal.getName() = " + principal.getName());
+        User user = userService.vewUserByEmail(principal.getName());
+        if (user.getProductList().contains(product) && !product.getUsersWhoLiked().contains(user) && !product.getUsersWhoDisliked().contains(user)) {
+            user.getProductList().remove(product);
+            userService.editUser(user);
+        }
+        if (user.getProductList().isEmpty()) return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/myproducts)");
+    }
+
     @RequestMapping(value = "/remove-from-my-products-list/{productId}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
     public ModelAndView removeProductFromMyProduct (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
         System.out.println("productIdToUserId = " + productId);
@@ -155,11 +170,11 @@ public class AppController {
             userService.editUser(user);
         }
         if (user.getProductList().isEmpty()) return new ModelAndView("redirect:/products");
-        return new ModelAndView("redirect:/myproducts");
+        return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
-    @RequestMapping(value = "/delete-product/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView removeProduct (@PathVariable String id, HttpServletRequest request) {
+    @RequestMapping(value = "/delete-product/{id}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView removeProduct (@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         System.out.println("productIdToUserId = " + id);
         Product product = productService.vewProductById(Long.parseLong(id));
         Principal principal = request.getUserPrincipal();
@@ -177,7 +192,7 @@ public class AppController {
         } else {
             System.out.println("Some users contains this product. Remove it from user and after you'll can delete this product.");
         }
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
     @GetMapping("/add_product")
