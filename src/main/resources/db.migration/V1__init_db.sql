@@ -60,3 +60,4 @@ alter table users_who_liked
     add constraint users_who_liked_product_id_fk
     foreign key (product_id)
     references products (id);
+
