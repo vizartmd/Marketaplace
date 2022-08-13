@@ -11,9 +11,9 @@
 > else run -> java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar \<MySQL username\> \<MySQL password\><br />
 > if Tomcat successfully started on port 8088,<br />
 > run in MySQL scripts from add_products.sql file witch is in resources folder to create some products in the database<br />
-> run in browser -> http://localhost:8088<br />
+> run in the browser -> http://localhost:8088<br />
 > complete the registration and then log in, after successfully log in you can create another products and test the functionality of the "Marketplace application" as per the requirements<br />
-> to view Swagger API Docs run in browser -> http://localhost:8088/swagger-ui.html
+> to view Swagger API Docs run in the browser -> http://localhost:8088/swagger-ui.html
 
 
 
