@@ -55,8 +55,10 @@ public class DatabaseConfig {
         } catch (ClassNotFoundException | ClassCastException e) {
             e.printStackTrace();
         }
-        ds.setUsername(MySQLCredentials.getUserName());
-        ds.setPassword(MySQLCredentials.getPassword());
+        ds.setUsername(env.getRequiredProperty("spring.datasource.username"));
+        ds.setPassword(env.getRequiredProperty("spring.datasource.password"));
+//        ds.setUsername(MySQLCredentials.getUserName());
+//        ds.setPassword(MySQLCredentials.getPassword());
         return ds;
     }
 
