@@ -4,11 +4,13 @@
 > create 'marketplace' database by running in MySQL -> CREATE SCHEMA `marketplace`;<br />
 > run the following commands in the command line:<br />
 > git clone https://github.com/vizartmd/Marketplace.git<br />
-> cd Marketplace/<br />
+> cd marketplace-rest-api/<br />
 > mvn clean install<br />
-> mvn spring-boot:run<br />
-> then run in browser address bar -> http://localhost:8082<br />
-> after registration go to login, after successful login create some products and test the functionality of the app as per the requirements<br />
+> after BUILD SUCCESS run -> cd target/
+> java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar
+> if Tomcat successfully started on port 8082
+> enter in browser address bar -> http://localhost:8082<br />
+> do the registration then login, after successfully login create some products and test the functionality of the app as per the requirements<br />
 
 
 
