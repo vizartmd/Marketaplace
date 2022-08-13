@@ -12,7 +12,7 @@
 > if Tomcat successfully started on port 8082,<br />
 > run in MySQL scripts from add_products.sql file witch is in resources folder to create some products in the database<br />
 > run in browser -> http://localhost:8082<br />
-> complete the registration and then log in, after successfully log in create some products and test the functionality of the "Marketplace application" as per the requirements<br />
+> complete the registration and then log in, after successfully log you can create another products and test the functionality of the "Marketplace application" as per the requirements<br />
 
 
 
