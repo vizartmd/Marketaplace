@@ -1,6 +1,5 @@
 package com.marketplace.config.persistence;
 
-import com.marketplace.model.dto.MySQLCredentials;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -46,20 +45,7 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        SimpleDriverDataSource ds = new SimpleDriverDataSource();
-        ds.setUrl(env.getRequiredProperty("spring.datasource.url"));
-        Class<Driver> driverClass;
-        try {
-            driverClass = (Class<Driver>) Class.forName(env.getRequiredProperty("spring.datasource.driverClassName"));
-            ds.setDriverClass(driverClass);
-        } catch (ClassNotFoundException | ClassCastException e) {
-            e.printStackTrace();
-        }
-        ds.setUsername(env.getRequiredProperty("spring.datasource.username"));
-        ds.setPassword(env.getRequiredProperty("spring.datasource.password"));
-//        ds.setUsername(MySQLCredentials.getUserName());
-//        ds.setPassword(MySQLCredentials.getPassword());
-        return ds;
+        return DataSourceFactory.getDataSource();
     }
 
     public Properties getHibernateProperties() {
