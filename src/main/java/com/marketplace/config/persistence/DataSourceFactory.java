@@ -28,8 +28,8 @@ public class DataSourceFactory {
                 } catch (ClassNotFoundException | ClassCastException e) {
                     e.printStackTrace();
                 }
-                ds.setUsername("root");
-                ds.setPassword("");
+                ds.setUsername(DatabaseWithCredentials.getUserName());
+                ds.setPassword(DatabaseWithCredentials.getPassword());
                 break;
             case "postgresql":
                 ds.setUrl("jdbc:postgresql://localhost:5432/marketplace");
@@ -39,8 +39,8 @@ public class DataSourceFactory {
                 } catch (ClassNotFoundException | ClassCastException e) {
                     e.printStackTrace();
                 }
-                ds.setUsername("postgres");
-                ds.setPassword("admin");
+                ds.setUsername(DatabaseWithCredentials.getUserName());
+                ds.setPassword(DatabaseWithCredentials.getPassword());
                 break;
             case "h2":
                 ds.setUrl("jdbc:h2:mem:marketplace;DB_CLOSE_DELAY=-1");
@@ -50,8 +50,8 @@ public class DataSourceFactory {
                 } catch (ClassNotFoundException | ClassCastException e) {
                     e.printStackTrace();
                 }
-                ds.setUsername("sa");
-                ds.setPassword("");
+                ds.setUsername(DatabaseWithCredentials.getUserName());
+                ds.setPassword(DatabaseWithCredentials.getPassword());
                 break;
             default:
                 return null;
