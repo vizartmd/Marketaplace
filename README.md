@@ -9,11 +9,11 @@
 > 4) cd target/<br />
 > if you don't need a password to access database use "" instead of \<MySQL password\><br />
 > if you use MySQL database run -> <br />
-> 5-A) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar mysql \<MySQL username\> \<MySQL password\><br />
-> if you use PostgreSQL database run -><br />
-> 5-B) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar postgresql \<PostgreSQL username\> \<PostgreSQL password\><br />
-> if you use H2 in memory database run -><br />
-> 5-C)java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar h2 \<H2 username\> \<H2 password\><br />
+> 5) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar mysql \<MySQL username\> \<MySQL password\><br />
+> else if you use PostgreSQL database run -><br />
+> 5) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar postgresql \<PostgreSQL username\> \<PostgreSQL password\><br />
+> else if you use H2 in memory database run -><br />
+> 5) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar h2 \<H2 username\> \<H2 password\><br />
 > if Tomcat successfully started on port 8088 run in browser -><br />
 > 6) http://localhost:8088 and you'll see registration/login form<br />
 > complete the registration and then log in, after successfully log in you can test the functionality of the "Marketplace application" as per the requirements<br />
