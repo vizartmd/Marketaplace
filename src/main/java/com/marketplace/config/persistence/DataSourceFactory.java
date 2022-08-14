@@ -13,13 +13,8 @@ import javax.sql.DataSource;
 import java.sql.Driver;
 
 @Configuration
-@PropertySource("classpath:application.properties")
 public class DataSourceFactory {
 
-    @Resource
-    private Environment env;
-
-//    @Bean
     public static DataSource getDataSource() {
         SimpleDriverDataSource ds = new SimpleDriverDataSource();
         String database = DatabaseWithCredentials.getTypeOfDatabase();
@@ -46,6 +41,17 @@ public class DataSourceFactory {
                 }
                 ds.setUsername("postgres");
                 ds.setPassword("admin");
+                break;
+            case "h2":
+                ds.setUrl("jdbc:h2:mem:marketplace;DB_CLOSE_DELAY=-1");
+                try {
+                    driverClass = (Class<Driver>) Class.forName("org.h2.Driver");
+                    ds.setDriverClass(driverClass);
+                } catch (ClassNotFoundException | ClassCastException e) {
+                    e.printStackTrace();
+                }
+                ds.setUsername("sa");
+                ds.setPassword("");
                 break;
             default:
                 return null;
