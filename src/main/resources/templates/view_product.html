@@ -59,8 +59,12 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label" style="text-align: right">Description: </label>
                 <div class="col-8">
-                    <input type="text" th:value="${product.description}" class="form-control"
-                           required readonly minlength="6" maxlength="500"/>
+<!--                    <input type="text" th:value="${product.description}" class="form-control"-->
+<!--                           required readonly minlength="6" maxlength="500"/>-->
+                    <textarea class="form-control" id="description" rows="5"
+                              name="description"
+                              placeholder="Description" th:field="${product.description}"
+                              required="required" readonly></textarea>
                 </div>
             </div>
             <div class="form-group row">
