@@ -1,7 +1,8 @@
 
 # Marketplace application
 > To start the application you must have Java 11.0.15, Maven 3.6.3, PostgreSQL 9.6 installed<br /><br />
-> start MySQL or PostgreSQL, create 'marketplace' database<br />
+> if you are going to use PostgreSQL database start it, create 'marketplace' schema<br />
+> if you will use H2 in memory database, no need to create any schema<br /><br />
 > run the following commands in the command line:<br />
 > 1) git clone https://github.com/vizartmd/Marketplace.git<br />
 > 2) cd Marketplace/<br />
