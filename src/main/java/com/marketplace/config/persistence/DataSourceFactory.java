@@ -20,17 +20,6 @@ public class DataSourceFactory {
         String database = DatabaseWithCredentials.getTypeOfDatabase();
         Class<Driver> driverClass;
         switch (database) {
-            case "mysql":
-                ds.setUrl("jdbc:mysql://localhost:3306/marketplace");
-                try {
-                    driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
-                    ds.setDriverClass(driverClass);
-                } catch (ClassNotFoundException | ClassCastException e) {
-                    e.printStackTrace();
-                }
-                ds.setUsername("root");
-                ds.setPassword("");
-                break;
             case "postgresql":
                 ds.setUrl("jdbc:postgresql://localhost:5432/marketplace");
                 try {

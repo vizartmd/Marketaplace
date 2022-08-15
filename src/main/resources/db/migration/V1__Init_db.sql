@@ -1,19 +1,17 @@
 create table products (
-    id bigint not null auto_increment,
+    id serial primary key,
     description varchar(2048),
-    is_checked_like bit,
-    is_liked bit,
+    is_checked_like Boolean,
+    is_liked Boolean,
     price double precision,
-    title varchar(255),
-    primary key (id)
+    title varchar(255)
 );
 
 create table users (
-    id bigint not null auto_increment,
+    id serial primary key,
     email varchar(255),
     password varchar(255),
-    user_name varchar(255),
-    primary key (id)
+    user_name varchar(255)
 );
 
 create table users_products (
