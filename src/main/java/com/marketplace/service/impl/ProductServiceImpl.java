@@ -1,10 +1,11 @@
-package com.marketplace.service;
+package com.marketplace.service.impl;
 
 import com.fasterxml.jackson.core.PrettyPrinter;
 import com.marketplace.model.Product;
 import com.marketplace.model.User;
 import com.marketplace.repository.ProductRepository;
 import com.marketplace.repository.UserRepository;
+import com.marketplace.service.ProductService;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.slf4j.LoggerFactory;

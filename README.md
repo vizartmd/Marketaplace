@@ -1,7 +1,34 @@
+## Task:
+> To create a Rest API for a "marketplace".
+> 1. User Registration/Authentication.
+> 2. CRUD for own products
+> 3. List with pagination for all products
+> 4. Like/Unlike for products that do not belong to the authenticated user (a product cannot receive like and dislike from the same user).
+> 5. Add the README file with the necessary steps to build and run the application with the necessary parameters.
+
+### Other requirements
+> Note - The basic entities are very simple, User (username, email, password) and Product (title, description, price).<br />
+> Framework - Spring (Spring security, spring data (MyBatis-preferably or Hibernate)).<br />
+> Database - H2/PostgreSql<br />
+><br />
+> Endpoints:<br />
+> Create product<br />
+> Edit product<br />
+> Delete product<br />
+> View product<br />
+> List my-products<br />
+> List products<br />
+> Patch like-product<br />
+> Patch unlike-product<br />
+><br />
+> package manager - Maven<br />
+> Language - min. Java 8<br />
+> API Docs - Swagger<br />
 
 # Marketplace application
 > To start the application you must have Java 11.0.15, Maven 3.6.3, PostgreSQL 9.6 installed<br /><br />
-> start MySQL or PostgreSQL, create 'marketplace' database<br />
+> if you are going to use PostgreSQL database start it, create 'marketplace' schema<br />
+> if you will use H2 in memory database, no need to create any schema<br /><br />
 > run the following commands in the command line:<br />
 > 1) git clone https://github.com/vizartmd/Marketplace.git<br />
 > 2) cd Marketplace/<br />

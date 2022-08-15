@@ -1,10 +1,17 @@
-package com.marketplace.service;
+package com.marketplace.service.impl;
 
 import com.marketplace.model.Product;
 import com.marketplace.model.User;
 import com.marketplace.repository.UserRepository;
+import com.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,17 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User vewUserById(Long id) {
-        return userRepository.findById(id).get();
-    }
-
-    @Override
-    public void deleteUser(User user) {
-    }
-
-    @Override
-    public void deleteUserById(Long id) {
-
+    public List<User> allUsers() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -59,7 +57,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> allUsers() {
-        return userRepository.findAll();
+    public ModelAndView myProductsListOnPage(HttpServletRequest request, Model model) {
+        Principal principal = request.getUserPrincipal();
+        model.addAttribute("email", principal.getName());
+        User user = userRepository.findByEmail(principal.getName());
+        List<Product> listMyProducts = userRepository.findByEmail(user.getEmail()).getProductList();
+        model.addAttribute("listMyProducts", listMyProducts);
+        return new ModelAndView("redirect:/myproducts");
+    }
+
+    @Override
+    public ModelAndView allUsersOnPage(HttpServletRequest request, Model model) {
+        List<User> listUsers = userRepository.findAll();
+        model.addAttribute("listUsers", listUsers);
+        Principal principal = request.getUserPrincipal();
+        model.addAttribute("email", principal.getName());
+        return new ModelAndView("all-users");
     }
 }
