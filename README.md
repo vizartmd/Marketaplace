@@ -5,6 +5,7 @@
 > 3. List with pagination for all products
 > 4. Like/Unlike for products that do not belong to the authenticated user (a product cannot receive like and dislike from the same user).
 > 5. Add the README file with the necessary steps to build and run the application with the necessary parameters.
+
 > Note - The basic entities are very simple, User (username, email, password) and Product (title, description, price).
 > Framework - Spring (Spring security, spring data (MyBatis-preferably or Hibernate)).
 > Database - H2/PostgreSql
