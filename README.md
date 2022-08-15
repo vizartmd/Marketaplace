@@ -7,22 +7,23 @@
 > 5. Add the README file with the necessary steps to build and run the application with the necessary parameters.
 
 ### Other requirements
-> Note - The basic entities are very simple, User (username, email, password) and Product (title, description, price).
-> Framework - Spring (Spring security, spring data (MyBatis-preferably or Hibernate)).
-> Database - H2/PostgreSql
-> Endpoints:
-> > Create product
-> > Edit product
-> > Delete product
-> > View product
-> > List my-products
-> > List products
-> > Patch like-product
-> > Patch unlike-product
-
-> > package manager - Maven
-> > Language - min. Java 8
-> > API Docs - Swagger
+> Note - The basic entities are very simple, User (username, email, password) and Product (title, description, price).<br />
+> Framework - Spring (Spring security, spring data (MyBatis-preferably or Hibernate)).<br />
+> Database - H2/PostgreSql<br />
+><br />
+> Endpoints:<br />
+> Create product<br />
+> Edit product<br />
+> Delete product<br />
+> View product<br />
+> List my-products<br />
+> List products<br />
+> Patch like-product<br />
+> Patch unlike-product<br />
+><br />
+> package manager - Maven<br />
+> Language - min. Java 8<br />
+> API Docs - Swagger<br />
 
 # Marketplace application
 > To start the application you must have Java 11.0.15, Maven 3.6.3, PostgreSQL 9.6 installed<br /><br />
