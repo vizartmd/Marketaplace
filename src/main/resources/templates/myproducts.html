@@ -76,14 +76,14 @@
                 <td>
                     <div style="display: flex; justify-content: right">
                         <form th:action="@{/edit-product/{id}(id = ${product.id})}" method="get">
-                            <button type="submit"class=" btn btn-warning">Edit</button>
+                            <button type="submit" class=" btn btn-warning">Edit</button>
                         </form>
                     </div>
                 </td>
                 <td>
                     <div style="display: inline-block">
                         <form th:action="@{/remove-from-my-products-list/{id}(id = ${product.id})}" method="post">
-                            <button type="submit"class=" btn btn-danger">Remove from my products</button>
+                            <button type="submit" class=" btn btn-danger">Remove from my products</button>
                         </form>
                     </div>
                 </td>

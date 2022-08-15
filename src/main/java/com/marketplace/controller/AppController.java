@@ -155,7 +155,7 @@ public class AppController {
             userService.editUser(user);
         }
         if (user.getProductList().isEmpty()) return new ModelAndView("redirect:/products");
-        return new ModelAndView("redirect:/myproducts)");
+        return new ModelAndView("redirect:/myproducts");
     }
 
     @RequestMapping(value = "/remove-from-my-products-list/{productId}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
