@@ -1,8 +1,9 @@
-package com.marketplace.service;
+package com.marketplace.service.impl;
 
 import com.marketplace.model.Product;
 import com.marketplace.model.User;
 import com.marketplace.repository.UserRepository;
+import com.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
