@@ -20,4 +20,7 @@ public interface UserService {
     List<Product> myProducts(Long id);
     List<Product> myProductsList(String email);
     ModelAndView myProductsListOnPage(HttpServletRequest request, Model model);
+    List<Product> addToMyProducts(Long id, String email);
+    List<Product> removeFromMyProducts(Long id, String email);
+    List<Product> allMyProducts(String email);
 }

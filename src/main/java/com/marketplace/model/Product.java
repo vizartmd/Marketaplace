@@ -4,6 +4,7 @@ import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Comparable<Product> {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique = true, name = "id", nullable = false)
@@ -48,4 +49,21 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> usersWhoDisliked;
 
+    public Product(Long id, String title, String description, double price) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Product(String title, String description, double price) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        return Comparator.comparing(Product::getId).compare(this, o);
+    }
 }

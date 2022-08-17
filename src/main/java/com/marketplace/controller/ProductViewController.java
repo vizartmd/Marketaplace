@@ -13,31 +13,31 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-public class ProductController {
+public class ProductViewController {
 
-    private UserService userService;
-    private ProductService productService;
+    private final UserService userService;
+    private final ProductService productService;
     private Product product;
     private Principal principal;
     private User user;
 
-    public ProductController(UserService userService, ProductService productService) {
+    public ProductViewController(UserService userService, ProductService productService) {
         this.userService = userService;
         this.productService = productService;
     }
 
-
     @GetMapping("/add_product")
-    public ModelAndView createProduct (HttpServletRequest request,  Model model) {
+    public ModelAndView createProductView (HttpServletRequest request,  Model model) {
         principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
         return new ModelAndView("create_product");
     }
 
     @PostMapping("/add_product")
-    public ModelAndView insertProduct (Product product, HttpServletRequest request,  Model model) {
+    public ModelAndView insertProductView (Product product, HttpServletRequest request, Model model) {
         principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
         List<Product> products = productService.allProducts();
@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @GetMapping("/view-product/{id}")
-    public ModelAndView viewProductById (@PathVariable String id, HttpServletRequest request,  Model model) {
+    public ModelAndView viewProductByIdView (@PathVariable String id, HttpServletRequest request,  Model model) {
         principal = request.getUserPrincipal();
         product = productService.vewProductById(Long.parseLong(id));
         model.addAttribute("email", principal.getName());
@@ -58,7 +58,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit-product/{id}")
-    public ModelAndView editProductById (@PathVariable String id, HttpServletRequest request,  Model model) {
+    public ModelAndView editProductByIdView (@PathVariable String id, HttpServletRequest request,  Model model) {
         principal = request.getUserPrincipal();
         product = productService.vewProductById(Long.parseLong(id));
         model.addAttribute("email", principal.getName());
@@ -67,7 +67,7 @@ public class ProductController {
     }
 
     @PostMapping("/update_product")
-    public ModelAndView updateProduct (Product product, HttpServletRequest request,  Model model) {
+    public ModelAndView updateProductView (Product product, HttpServletRequest request,  Model model) {
         principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
         productService.editProduct(product);
@@ -75,7 +75,7 @@ public class ProductController {
     }
 
     @GetMapping("/myproducts")
-    public ModelAndView myProducts(HttpServletRequest request, Model model) {
+    public ModelAndView myProductsView(HttpServletRequest request, Model model) {
         principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
         List<Product> listMyProducts = userService.myProductsList(principal.getName());
@@ -84,7 +84,7 @@ public class ProductController {
     }
 
     @PostMapping("/like-product/{productId}/currentPage/{currentPage}")
-    public ModelAndView likeProductByUserEmail(@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView likeProductByUserEmailView(@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(productId));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
@@ -95,6 +95,8 @@ public class ProductController {
         if (usersWhoLiked == null)  {
             usersWhoLiked = (List) new HashSet<User>();
             usersWhoLiked.add(user);
+            product.setLiked(true);
+            product.setCheckedLike(true);
             productService.editProduct(product);
             return new ModelAndView("redirect:/products/page/" + currentPage);
         }
@@ -107,68 +109,58 @@ public class ProductController {
     }
 
     @PostMapping("/unlike-product/{id}/currentPage/{currentPage}")
-    public ModelAndView UnLikeProductByUserEmail(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView UnLikeProductByUserEmailView(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(id));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
-        List myProducts = userService.myProducts(user.getId());
-        List usersWhoLiked = product.getUsersWhoLiked();
-        List usersWhoDisliked = product.getUsersWhoDisliked();
-        if (myProducts.contains(product) || usersWhoLiked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
-        if (usersWhoDisliked == null)  {
-            usersWhoDisliked = (List) new HashSet<User>();
+        if (userService.myProducts(user.getId()).contains(product)
+                || product.getUsersWhoLiked().contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
+        if (product.getUsersWhoDisliked() == null)  {
             product.setLiked(false);
             product.setCheckedLike(true);
-            usersWhoDisliked.add(user);
+            product.getUsersWhoDisliked().add(user);
             productService.editProduct(product);
             return new ModelAndView("redirect:/products/page/" + currentPage);
         }
-        if (usersWhoDisliked.contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
+        if (product.getUsersWhoDisliked().contains(user)) return new ModelAndView("redirect:/products/page/" + currentPage);
         product.setLiked(false);
         product.setCheckedLike(true);
-        usersWhoDisliked.add(user);
+        product.getUsersWhoDisliked().add(user);
         productService.editProduct(product);
         return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
     @PostMapping("/reset-likes/{id}/currentPage/{currentPage}")
-    public ModelAndView resetLikes(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView resetLikesView(@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(id));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
         product.setLiked(false);
         product.setCheckedLike(false);
-        List usersWhoLiked = product.getUsersWhoLiked();
-        List unLikedProducts = product.getUsersWhoDisliked();
-        if (usersWhoLiked.contains(user)) {
-            usersWhoLiked.clear();
-        }
-        if (unLikedProducts.contains(user)) {
-            unLikedProducts.clear();
-        }
+        product.getUsersWhoLiked().remove(user);
+        product.getUsersWhoDisliked().remove(user);
         productService.editProduct(product);
         return new ModelAndView("redirect:/products/page/" + currentPage);
     }
 
     @GetMapping("/products")
-    public ModelAndView getAllPages(Model model, HttpServletRequest request){
-        return getOnePage(model, 1, request);
+    public ModelAndView getAllPagesView(Model model, HttpServletRequest request){
+        return getOnePageView(model, 1, request);
     }
 
-    @GetMapping("/products/page/{pageNumber}")
-    public ModelAndView getOnePage(Model model, @PathVariable("pageNumber") int currentPage, HttpServletRequest request) {
+    @GetMapping("/products/page/{currentPage}")
+    public ModelAndView getOnePageView(Model model, @PathVariable("currentPage") int currentPage, HttpServletRequest request) {
         Page<Product> page = productService.findPage(currentPage);
         int totalPages = page.getTotalPages();
         long totalItems = page.getTotalElements();
-        List<Product> productsOnPage = page.getContent();
-
+        List<Product> productsOnPage = page.getContent().stream().sorted().collect(Collectors.toList());
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", totalItems);
         model.addAttribute("listProducts", productsOnPage);
 
         Principal principal = request.getUserPrincipal();
-        model.addAttribute("email", principal.getName());
+            model.addAttribute("email", principal.getName());
         User user = userService.vewUserByEmail(principal.getName());
         model.addAttribute("user", user);
         List<Product> listMyProducts = userService.myProductsList(principal.getName());
@@ -177,7 +169,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/add-product-to-user/{productId}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView addProductToUser (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView addProductToUserView (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(productId));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
@@ -189,7 +181,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/remove-from-my-products/{productId}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView removeProductFromUser (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView removeProductFromUserView (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(productId));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
@@ -201,7 +193,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/remove-from-my-products-list/{productId}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView removeProductFromMyProductsList (@PathVariable String productId, HttpServletRequest request) {
+    public ModelAndView removeProductFromMyProductsListView (@PathVariable String productId, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(productId));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
@@ -214,7 +206,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/remove-from-my-products-list/{productId}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView removeProductFromMyProduct (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView removeProductFromMyProductView (@PathVariable String productId, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(productId));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
@@ -227,15 +219,15 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/delete-product/{id}/currentPage/{currentPage}", method = { RequestMethod.GET, RequestMethod.POST })
-    public ModelAndView removeProduct (@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
+    public ModelAndView removeProductView (@PathVariable String id, @PathVariable String currentPage, HttpServletRequest request) {
         product = productService.vewProductById(Long.parseLong(id));
         principal = request.getUserPrincipal();
         user = userService.vewUserByEmail(principal.getName());
         List<Product> userProducts = user.getProductList();
         if (!userProducts.contains(product) && !product.getUsersWhoLiked().contains(user) && !product.getUsersWhoDisliked().contains(user)) {
             product.setCheckedLike(false);
-            productService.deleteProduct(product);
-            user.getProductList().remove(product);
+            productService.deleteProduct(Long.parseLong(id));
+            userProducts.remove(product);
         } else {
             return new ModelAndView("redirect:/products/page/" + currentPage);
         }
