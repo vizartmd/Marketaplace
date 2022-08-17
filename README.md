@@ -55,12 +55,26 @@
 > /dislike-products/productId/email/loggedUserEmail<br />
 > /reset-likes-of-product/productId/email/loggedUserEmail<br />
 > /create-product<br />
+> <br />
+> an example JSON object to put in the body of the request to create a user:<br />
+> {<br />
+>   "title": "Apple",<br />
+>   "description": "Good brand!",<br />
+>   "price": "3000"<br />
+> }<br />
 ### endpoints user-rest-controller:<br />
 > /addUser<br />
 > /all-users<br />
 > /all-my-products/loggedUserEmail<br />
 > /add-to-my-products/productId/email/loggedUserEmail<br />
 > /remove-from-my-products/productId/email/loggedUserEmail<br />
+> <br />
+> an example JSON object to put in the body of the request to create a user:<br />
+> {<br />
+>   "userName": "Adrian",<br />
+>   "email": "adrian@gmail.com",<br />
+    "password": "1234556"<br />
+> }<br />
 ###
 > to view Swagger API Docs run in browser -><br />
 > 7) http://localhost:8088/swagger-ui.html
