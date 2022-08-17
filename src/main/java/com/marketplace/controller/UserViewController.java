@@ -2,24 +2,23 @@ package com.marketplace.controller;
 
 import com.marketplace.model.User;
 import com.marketplace.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestController
-public class UserController {
+@Controller
+public class UserViewController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserViewController(UserService userService) {
         this.userService = userService;
-    }
-
-    @PostMapping("/addUser")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
     }
 
     @GetMapping("/users")
@@ -28,3 +27,4 @@ public class UserController {
     }
 
 }
+

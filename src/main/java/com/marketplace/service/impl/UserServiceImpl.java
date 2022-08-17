@@ -2,6 +2,7 @@ package com.marketplace.service.impl;
 
 import com.marketplace.model.Product;
 import com.marketplace.model.User;
+import com.marketplace.repository.ProductRepository;
 import com.marketplace.repository.UserRepository;
 import com.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, ProductRepository productRepository) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -32,7 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User editUser(User user) {
-        return userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user);
+        return user;
     }
 
     @Override
@@ -64,6 +67,30 @@ public class UserServiceImpl implements UserService {
         List<Product> listMyProducts = userRepository.findByEmail(user.getEmail()).getProductList();
         model.addAttribute("listMyProducts", listMyProducts);
         return new ModelAndView("redirect:/myproducts");
+    }
+
+    @Override
+    public List<Product> addToMyProducts(Long id, String email) {
+        Product product = productRepository.findById(id).get();
+        User user = userRepository.findByEmail(email);
+        user.getProductList().add(product);
+        userRepository.saveAndFlush(user);
+        return user.getProductList();
+    }
+
+    @Override
+    public List<Product> removeFromMyProducts(Long id, String email) {
+        Product product = productRepository.findById(id).get();
+        User user = userRepository.findByEmail(email);
+        user.getProductList().remove(product);
+        userRepository.saveAndFlush(user);
+        return user.getProductList();
+    }
+
+    @Override
+    public List<Product> allMyProducts(String email) {
+        User user = userRepository.findByEmail(email);
+        return user.getProductList();
     }
 
     @Override
