@@ -30,12 +30,12 @@ public class UserRestController {
         return userService.allUsers();
     }
 
-    @GetMapping("/add-to-my-products/{id}/{email}")
+    @GetMapping("/add-to-my-products/{id}/email/{email}")
     public List<Product> addToMyProducts(@PathVariable Long id, @PathVariable String email) {
         return userService.addToMyProducts(id, email);
     }
 
-    @GetMapping("/remove-from-my-products/{id}/{email}")
+    @GetMapping("/remove-from-my-products/{id}/email/{email}")
     public List<Product> removeFromMyProducts(@PathVariable Long id, @PathVariable String email) {
         return userService.removeFromMyProducts(id, email);
     }

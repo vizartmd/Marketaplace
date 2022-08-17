@@ -1,5 +1,6 @@
 package com.marketplace.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 

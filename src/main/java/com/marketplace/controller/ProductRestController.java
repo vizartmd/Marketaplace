@@ -1,11 +1,12 @@
 package com.marketplace.controller;
 
 import com.marketplace.model.Product;
-import com.marketplace.model.User;
 import com.marketplace.service.ProductService;
+import org.assertj.core.util.Preconditions;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class ProductRestController {
@@ -26,7 +27,7 @@ public class ProductRestController {
         return productService.vewProductById(id);
     }
 
-    @PutMapping("/edit-product")
+    @PostMapping("/edit-product")
     public Product editProduct(@RequestBody Product product) {
         return productService.editProduct(product);
     }
@@ -56,7 +57,7 @@ public class ProductRestController {
         return productService.likeProducts(id, email);
     };
 
-    @GetMapping("/unlike-products/{id}/email/{email}")
+    @GetMapping("/dislike-products/{id}/email/{email}")
     Product unLikeProducts(@PathVariable Long id, @PathVariable String email) {
         return productService.unLikeProducts(id, email);
     };

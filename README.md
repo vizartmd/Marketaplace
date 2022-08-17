@@ -42,6 +42,24 @@
 > 5) java -jar marketplace-rest-api-0.0.1-SNAPSHOT.jar h2 sa ""<br />
 > if Tomcat successfully started on port 8088 run in browser -><br />
 > 6) http://localhost:8088 and you'll see registration/login form<br />
-> complete the registration and then log in, after successfully log in you can create some products and test the functionality of the "Marketplace application" as per the requirements<br />
+> complete the registration and then log in<br />
+> after successfully log in you can test the Rest API in Postman or test the application through the GUI built with the MVC architecture. You can create some products and test the functionality of the "Marketplace App" as required<br />
+### endpoints product-rest-controller:<br />
+> /view-product-by-id/productId<br />
+> /edit-product<br />
+> /delete-product/productId<br />
+> /all-products<br />
+> /all-my-liked-products/loggedUserEmail<br />
+> /all-my-disliked-products/loggedUserEmail<br />
+> /like-products/productId/email/loggedUserEmail<br />
+> /dislike-products/productId/email/loggedUserEmail<br />
+> /reset-likes-of-product/productId/email/loggedUserEmail<br />
+> /create-product<br />
+### endpoints user-rest-controller:<br />
+> /addUser<br />
+> /all-users<br />
+> /all-my-products/loggedUserEmail<br />
+> /add-to-my-products/productId/email/loggedUserEmail<br />
+> /remove-from-my-products/productId/email/loggedUserEmail<br />
 > to view Swagger API Docs run in browser -><br />
 > 7) http://localhost:8088/swagger-ui.html

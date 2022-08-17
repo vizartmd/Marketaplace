@@ -25,14 +25,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product createProduct(Product product) {
-        productRepository.save(product);
-        return product;
+        return productRepository.save(product);
     }
 
     @Override
     public Product editProduct(Product product) {
-        productRepository.saveAndFlush(product);
-        return product;
+        return productRepository.save(product);
     }
 
     @Override

@@ -66,7 +66,7 @@ public class ProductViewController {
         return new ModelAndView("edit_product");
     }
 
-    @PostMapping("/update_product")
+    @PostMapping("/edit-product-view")
     public ModelAndView updateProductView (Product product, HttpServletRequest request,  Model model) {
         principal = request.getUserPrincipal();
         model.addAttribute("email", principal.getName());
