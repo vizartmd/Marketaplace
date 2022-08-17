@@ -46,18 +46,18 @@
 > after successfully log in you can test the Rest API in Postman or test the application through the GUI built with the MVC architecture. You can create some products and test the functionality of the "Marketplace App" as required<br />
 ### endpoints product-rest-controller:<br />
 > /create-product (method POST)<br />
-> /view-product-by-id/productId (method GET)<br />
+> /view-product-by-id/{productId} (method GET)<br />
 > /edit-product (method POST)<br />
-> /delete-product/productId (method GET)<br />
+> /delete-product/{productId} (method GET)<br />
 > /all-products (method GET)<br />
-> /all-my-liked-products/loggedUserEmail (method GET)<br />
-> /all-my-disliked-products/loggedUserEmail (method GET)<br />
-> /like-products/productId/email/loggedUserEmail (method GET)<br />
-> /dislike-products/productId/email/loggedUserEmail (method GET)<br />
-> /reset-likes-of-product/productId/email/loggedUserEmail (method GET)<br />
+> /all-my-liked-products/{loggedUserEmail} (method GET)<br />
+> /all-my-disliked-products/{loggedUserEmail} (method GET)<br />
+> /like-products/{productId}/email/{loggedUserEmail} (method GET)<br />
+> /dislike-products/{productId}/email/{loggedUserEmail} (method GET)<br />
+> /reset-likes-of-product/{productId}/email/{loggedUserEmail} (method GET)<br />
 > <br />
 > an example of JSON object to put in the body of the POST request to create a user:<br />
-> {<br />
+>> {<br />
 >>   "title": "Apple",<br />
 >>   "description": "Good brand!",<br />
 >>   "price": "3000"<br />
@@ -65,12 +65,12 @@
 ### endpoints user-rest-controller:<br />
 > /addUser (method POST)<br />
 > /all-users (method GET)<br />
-> /all-my-products/loggedUserEmail (method GET)<br />
-> /add-to-my-products/productId/email/loggedUserEmail (method GET)<br />
-> /remove-from-my-products/productId/email/loggedUserEmail (method GET)<br />
+> /all-my-products/{loggedUserEmail} (method GET)<br />
+> /add-to-my-products/{productId}/email/{loggedUserEmail} (method GET)<br />
+> /remove-from-my-products/{productId}/email/{loggedUserEmail} (method GET)<br />
 > <br />
 > an example of JSON object to put in the body of the POST request to create a user:<br />
-> {<br />
+>> {<br />
 >>   "userName": "Adrian",<br />
 >>   "email": "adrian@gmail.com",<br />
 >>   "password": "1234556"<br />
