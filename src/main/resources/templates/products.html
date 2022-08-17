@@ -87,7 +87,7 @@
                         </form>
                     </div>
                     <div style="display: inline-block">
-                        <form th:action="@{/unlike-product/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
+                        <form th:action="@{/dislike-product/{id}/currentPage/{currentPage}(id = ${product.id}, currentPage = ${currentPage})}" method="post">
                             <button type="submit" th:class="${!product.isLiked() && product.isCheckedLike() && product.getUsersWhoDisliked().contains(user) ? 'btn enabled' : 'btn disabled'}"><i class="fa fa-arrow-circle-o-left"></i>&#128078;</button>
                         </form>
                     </div>
